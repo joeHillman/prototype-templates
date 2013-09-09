@@ -1,0 +1,80 @@
+<?php
+/**
+ * @file
+ * Returns the HTML for a single Drupal page.
+ *
+ * Complete documentation for this file is available online.
+ * @see https://drupal.org/node/1728148
+ */
+?>
+<?php if(drupal_is_front_page()) {unset($page['content']['system_main']['default_message']);} ?>
+<div id="page" class="w-page">
+  <?php print render($page['custom_ad']); ?>
+  <header class="header-main" id="header" role="banner">
+    <?php if ($logo): ?>
+      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" class="header__logo logo-main" id="logo"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" class="header__logo-image" /></a>
+    <?php endif; ?>
+
+    <?php if ($site_name || $site_slogan): ?>
+      <div class="header__name-and-slogan" id="name-and-slogan">
+        <?php if ($site_name): ?>
+          <h1 class="header__site-name" id="site-name">
+            <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" class="header__site-link" rel="home"><span><?php print $site_name; ?></span></a>
+          </h1>
+        <?php endif; ?>
+
+        <?php if ($site_slogan): ?>
+          <div class="header__site-slogan" id="site-slogan"><?php print $site_slogan; ?></div>
+        <?php endif; ?>
+      </div>
+    <?php endif; ?>
+   
+    <?php if ($main_menu): ?>
+      <nav id="main-menu" role="navigation">
+        <?php
+        $vars = array(
+		  'direction' => 'down',
+		  'depth' => -1,
+		);
+		print theme('nice_menus_main_menu', $vars)
+	    ?>
+      </nav>
+    <?php endif; ?>
+    <?php print render($page['header']); ?>
+  </header>
+    <div id="navigation">
+      <?php print render($page['navigation']); ?>
+    </div>  
+  <div id="main" class="w-all-columns">
+    <div id="content" class="column w-col-one-two" role="main">
+	  <div class="l-col-one primary-content center">	
+
+		<?php print render($page['highlighted']); ?>
+        <?php print render($page['content']); ?>
+	  <?php
+	    // Render the sidebars to see if there's anything in them.
+	    $sidebar_first  = render($page['sidebar_first']);
+	  ?>	  
+	  <?php if ($sidebar_first): ?>
+		  <aside class="sidebars l-col-two secondary-content left">
+			<?php print $sidebar_first; ?>
+		  </aside>
+		<?php endif; ?>
+	  </div>
+    </div>
+    <?php
+      // Render the sidebars to see if there's anything in them.
+      $sidebar_second = render($page['sidebar_second']);
+    ?>
+
+    <?php if ($sidebar_second): ?>
+      <aside class="sidebars l-col-three tertiary-content right">
+
+        <?php print $sidebar_second; ?>
+      </aside>
+    <?php endif; ?>
+  </div>
+    <?php print render($page['footer']); ?>
+</div>
+
+<?php print render($page['bottom']); ?>
